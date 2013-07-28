@@ -1,4 +1,3 @@
-strings.xml
-bin/
-gen/
-
+string.xml
+res
+bin
