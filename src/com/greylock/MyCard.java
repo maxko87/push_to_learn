@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.fima.cardsui.objects.Card;
-import com.foursquare.greylock.R;
 
 public class MyCard extends Card {
 

@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.foursquare.greylock;
+package com.greylock;
 
 public final class R {
     public static final class attr {
@@ -204,18 +204,19 @@ public final class R {
         public static final int top_shadow=0x7f020006;
     }
     public static final class id {
-        public static final int button=0x7f080000;
-        public static final int cardContent=0x7f080009;
-        public static final int cardsview=0x7f080001;
-        public static final int description=0x7f080004;
-        public static final int listView=0x7f080005;
-        public static final int placeholder=0x7f080007;
-        public static final int stackContainer=0x7f08000b;
-        public static final int stackTitle=0x7f08000a;
-        public static final int sticky=0x7f080006;
-        public static final int textView2=0x7f080008;
-        public static final int title=0x7f080003;
-        public static final int webview=0x7f080002;
+        public static final int cardContent=0x7f08000a;
+        public static final int cardsview=0x7f080002;
+        public static final int description=0x7f080005;
+        public static final int foursquare_already_authenticated=0x7f080001;
+        public static final int foursquare_reg_button=0x7f080000;
+        public static final int listView=0x7f080006;
+        public static final int placeholder=0x7f080008;
+        public static final int stackContainer=0x7f08000c;
+        public static final int stackTitle=0x7f08000b;
+        public static final int sticky=0x7f080007;
+        public static final int textView2=0x7f080009;
+        public static final int title=0x7f080004;
+        public static final int webview=0x7f080003;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -231,11 +232,13 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f070000;
+        public static final int foursquare_already_authenticated_text=0x7f070003;
+        public static final int foursquare_authenticated=0x7f070002;
         public static final int foursquare_register=0x7f070001;
-        public static final int secret_foursquare_client_id=0x7f070002;
-        public static final int secret_foursquare_redirect_uri=0x7f070003;
-        public static final int secret_parse_app_id=0x7f070004;
-        public static final int secret_parse_client_key=0x7f070005;
+        public static final int secret_foursquare_client_id=0x7f070004;
+        public static final int secret_foursquare_redirect_uri=0x7f070005;
+        public static final int secret_parse_app_id=0x7f070006;
+        public static final int secret_parse_client_key=0x7f070007;
     }
     public static final class style {
         public static final int CardLightText=0x7f060001;

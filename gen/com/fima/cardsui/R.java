@@ -199,14 +199,14 @@ public final class R {
 		public static final int top_shadow = 0x7f020006;
 	}
 	public static final class id {
-		public static final int cardContent = 0x7f080009;
-		public static final int listView = 0x7f080005;
-		public static final int placeholder = 0x7f080007;
-		public static final int stackContainer = 0x7f08000b;
-		public static final int stackTitle = 0x7f08000a;
-		public static final int sticky = 0x7f080006;
-		public static final int textView2 = 0x7f080008;
-		public static final int title = 0x7f080003;
+		public static final int cardContent = 0x7f08000a;
+		public static final int listView = 0x7f080006;
+		public static final int placeholder = 0x7f080008;
+		public static final int stackContainer = 0x7f08000c;
+		public static final int stackTitle = 0x7f08000b;
+		public static final int sticky = 0x7f080007;
+		public static final int textView2 = 0x7f080009;
+		public static final int title = 0x7f080004;
 	}
 	public static final class layout {
 		public static final int cards_view = 0x7f030003;
