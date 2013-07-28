@@ -1,13 +1,18 @@
-/**
- * Copyright 2011 Mark Wyszomierski
- */
 package com.greylock;
+
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -43,19 +48,21 @@ public class WebViewActivity extends Activity
                 int start = url.indexOf(fragment);
                 System.out.println("url: " + url);
                 if (start > -1) {
-                    String accessToken = url.substring(start + fragment.length(), url.length());
+                    final String accessToken = url.substring(start + fragment.length(), url.length());
                     Toast.makeText(WebViewActivity.this, "Token: " + accessToken, Toast.LENGTH_SHORT).show();
-                    // store token and device ID
-                    ParseObject foursquareUser = new ParseObject("foursquareUser");
-                    foursquareUser.put("deviceId", deviceId);
-                    foursquareUser.put("foursquareAccessToken", accessToken);
-                    foursquareUser.saveInBackground();
+                    Thread trd = new Thread(new Runnable(){
+                    	  @Override
+                    	  public void run(){
+                    		  getUserJson(accessToken, deviceId);
+                    	  }
+                    });
+                    trd.start();
                     // save that the user has authenticated successfully
-                    SharedPreferences prefs = webViewContext.getSharedPreferences("com.greylock", Context.MODE_PRIVATE);
-                    Editor editor = prefs.edit();
-                    editor.putBoolean(webViewContext.getString(R.string.foursquare_authenticated), true);
-                    editor.commit();
-                    System.out.println(" IS AUTHENTICATED!!");
+//                    SharedPreferences prefs = webViewContext.getSharedPreferences("com.greylock", Context.MODE_PRIVATE);
+//                    Editor editor = prefs.edit();
+//                    editor.putBoolean(webViewContext.getString(R.string.foursquare_authenticated), true);
+//                    editor.commit();
+//                    System.out.println(" IS AUTHENTICATED!!");
                 }
             }
         });
@@ -64,4 +71,42 @@ public class WebViewActivity extends Activity
         //startActivity(intent);
 
     }
+    
+    // another api call to get the userId of the foursquare user
+    public void getUserJson(String accessToken, String deviceId){
+    	String URL = "https://api.foursquare.com/v2/users/self?oauth_token=" + accessToken;
+        HttpClient httpclient = new DefaultHttpClient();  
+        HttpGet request = new HttpGet(URL);  
+        request.addHeader("deviceId", deviceId);  
+        ResponseHandler<String> handler = new BasicResponseHandler();  
+        String result = "";
+		try {  
+            result = httpclient.execute(request, handler);  
+        } catch (ClientProtocolException e) {  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
+		System.out.println("JSON RESULT: " + result);
+		// parse out the userId
+		Pattern p = Pattern.compile("[0-9]+\"");
+		Matcher m = p.matcher(result);
+		int i=0;
+		String userId = "fuck it";
+		while (m.find() && i<1){			
+			userId = m.group();
+			userId = userId.substring(0, userId.length()-1);
+			i++;
+		}
+		System.out.println("FUCK YOU: " + userId);
+		
+        // store token and device ID
+        ParseObject foursquareUser = new ParseObject("foursquareUser");
+        foursquareUser.put("foursquareUserId", userId);
+        foursquareUser.put("deviceId", deviceId);
+        foursquareUser.put("foursquareAccessToken", accessToken);
+        foursquareUser.saveInBackground();
+        httpclient.getConnectionManager().shutdown();  
+    } 
+    
 }
