@@ -58,7 +58,7 @@ public class RenderActivity extends Activity {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("cardInfo");
 		query.whereEqualTo("device_id", deviceId);
 		Date now = new Date();
-		Date before = new Date(now.getTime()-(1000*60*2));
+		Date before = new Date(now.getTime()-(1000*60*10));
 		query.whereGreaterThan("createdAt", before);
 		
 		mCardView = (CardUI) findViewById(R.id.cardsview2);
