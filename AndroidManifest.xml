@@ -37,6 +37,10 @@
     </activity>
 
     <activity
+      android:name=".RenderActivity"
+    />
+    
+    <activity
       android:name=".WebViewActivity"
     />
 	
@@ -47,6 +51,11 @@
 	    <action android:name="android.intent.action.USER_PRESENT" />
 	  </intent-filter>
 	</receiver>
+	<receiver android:name="com.greylock.RenderActivity">
+	    <intent-filter>
+	        <action android:name="com.greylock.RENDER_CARD" />
+	    </intent-filter>
+	</receiver>    
 
   </application>
 </manifest>
