@@ -1,2 +1,4 @@
 strings.xml
-bin
+bin/
+gen/
+
