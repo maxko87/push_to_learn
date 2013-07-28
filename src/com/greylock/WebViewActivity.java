@@ -14,11 +14,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -145,5 +142,6 @@ public class WebViewActivity extends Activity
         foursquareUser.saveInBackground();
         httpclient.getConnectionManager().shutdown();  
     } 
+    
     
 }

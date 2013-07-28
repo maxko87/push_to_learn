@@ -1,12 +1,12 @@
 package com.greylock;
 
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.cardsui.example.MyCard;
 import com.fima.cardsui.views.CardUI;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -44,6 +45,7 @@ public class MainActivity extends Activity
         
         final String deviceId = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
         PushService.subscribe(this, "user_"+deviceId, WebViewActivity.class);
+        
         
         // check if user already authenticated with foursquare
         SharedPreferences prefs = this.getSharedPreferences("com.greylock", Context.MODE_PRIVATE);
@@ -84,11 +86,66 @@ public class MainActivity extends Activity
         	foursquare_authenticated_text.setVisibility(View.INVISIBLE);
         }
         
+        
+        
+        
 	    // init CardView
 		mCardView = (CardUI) findViewById(R.id.cardsview);
 		mCardView.setSwipeable(true);
 		renderNewCard("Get ready to learn some French!", "We will send you push notifications periodically throughout the day, based on your checkins and GPS coordinates.");
-    }
+    
+		
+		
+		PushService.subscribe(this, "user_"+deviceId, RenderActivity.class);
+	}
+	
+	class RenderActivity extends Activity {
+		@Override
+		protected
+		void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			final String deviceId = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+			
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("cardInfo");
+			query.whereEqualTo("device_id", deviceId);
+			Date now = new Date();
+			Date before = new Date(now.getTime()-(1000*60));
+			query.whereGreaterThan("createdAt", before);
+			
+			query.findInBackground(new FindCallback<ParseObject>() {
+			    public void done(List<ParseObject> results, ParseException e) {
+			        if (e == null && results.size()>0) {
+			        	for (int i=0; i<results.size(); i++){
+			        		ParseObject res = results.get(i);
+			        		String cardTitle = res.getString("english");
+			        		String cardContent = res.getString("translation");
+			        		String cardPlace = res.getString("place");
+			        		String cardService = res.getString("service");
+			        		
+			        		if (i==0){
+			        			mCardView.addCard(new MyCard("Get the CardsUI view",""));
+			        		}
+			        		else{
+			        			mCardView.addCardToLastStack(new MyCard(cardTitle, cardContent));
+			        		}
+			        		
+			        	}
+			        } else {
+			        	System.out.println("no data");
+			        }
+			    }
+			});
+			
+			//mCardView.addCard(new MyCard(A, B));
+			mCardView.refresh();
+		}
+	}
+	
+	
+	
+	
+	
+	
 	
 	public void renderNewCard (String frenchWord, String englishWord) {
 		mCardView.addCard(new MyCard(frenchWord, englishWord));
