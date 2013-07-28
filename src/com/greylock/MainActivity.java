@@ -1,17 +1,19 @@
 package com.greylock;
 
-import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -44,8 +46,12 @@ public class MainActivity extends Activity
         ParseInstallation.getCurrentInstallation().saveInBackground();
         
         final String deviceId = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
-        //PushService.subscribe(this, "user_"+deviceId, MainActivity.class);
-        
+
+//        // color string normally
+//        View layout = findViewById(R.layout.activity_main);
+//        final TextView cardView = (TextView) layout.findViewById(R.id.card_title);
+//        cardView.setGravity(Gravity.CENTER);
+//        cardView.setTextColor(Color.parseColor("#888888"));
         
         // check if user already authenticated with foursquare
         SharedPreferences prefs = this.getSharedPreferences("com.greylock", Context.MODE_PRIVATE);
@@ -89,14 +95,14 @@ public class MainActivity extends Activity
 	    // init CardView
 		mCardView = (CardUI) findViewById(R.id.cardsview);
 		mCardView.setSwipeable(true);
-		renderNewCard("Get ready to learn some French!", "We will send you push notifications periodically throughout the day, based on your checkins and GPS coordinates.");
+		renderNewCard("Welcome to WordButler!", "Bienvenue au WordButler!", "We will send you push notifications periodically throughout the day, based on your checkins and GPS coordinates.");
   
 		System.out.println("subscribing to RenderActivity:");
 		PushService.subscribe(this.getApplicationContext(), "user_"+deviceId, RenderActivity.class);
 	}
 	
-	public void renderNewCard (String frenchWord, String englishWord) {
-		mCardView.addCard(new MyCard(frenchWord, englishWord));
+	public void renderNewCard (String frenchWord, String englishWord, String eh) {
+		mCardView.addCard(new MyCard(frenchWord, englishWord, eh));
 		mCardView.refresh();
 	}
 }

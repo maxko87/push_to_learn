@@ -6,18 +6,10 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
     
-    <Button  
-	    android:id="@+id/foursquare_reg_button"
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content" 
-	    android:text="@string/foursquare_register"
-	    />
-    
     <TextView
         android:id="@+id/foursquare_already_authenticated"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/foursquare_reg_button"
         android:text="@string/foursquare_already_authenticated_text" />
     
     <com.fima.cardsui.views.CardUI
@@ -25,5 +17,12 @@
         android:layout_below="@id/foursquare_already_authenticated"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    
+    <Button  
+	    android:id="@+id/foursquare_reg_button"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/foursquare_register"
+	    />
 
 </RelativeLayout>

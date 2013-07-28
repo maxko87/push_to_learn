@@ -69,18 +69,18 @@ public class RenderActivity extends Activity {
 		        if (e == null && results.size()>0) {
 		        	for (int i=0; i<results.size(); i++){
 		        		ParseObject res = results.get(i);
-		        		String cardTitle = res.getString("english");
-		        		String cardContent = res.getString("translation");
-		        		String cardPlace = res.getString("place");
-		        		//String cardService = res.getString("service");
-		        		System.out.println("CARD INFO:" + cardTitle + " + " + cardContent);
-		        		
-		        		if (i==0){
-		        			mCardView.addCard(new MyCard(cardTitle, cardContent + " \n Sent because you checked in at " + cardPlace + " with " + "Foursquare"));
-		        		}
-		        		else{
-		        			mCardView.addCardToLastStack(new MyCard(cardTitle, cardContent));
-		        		}
+		        		String english = res.getString("english");
+		        		String french = res.getString("translation");
+		        		String place = res.getString("place");
+		        		System.out.println("CARD INFO:" + english + " + " + french);
+	        			mCardView.addCard(new MyCard(english, french, "Sent because you checked in at " + place + " with " + "Foursquare"));
+
+//		        		if (i==0){
+//		        			mCardView.addCard(new MyCard(cardTitle, cardContent + " \n Sent because you checked in at " + cardPlace + " with " + "Foursquare"));
+//		        		}
+//		        		else{
+//		        			mCardView.addCardToLastStack(new MyCard(cardTitle, cardContent));
+//		        		}
 		        		
 		        	}
 		        	mCardView.refresh();
@@ -92,8 +92,4 @@ public class RenderActivity extends Activity {
 		});
 	}
 	
-	public void renderNewCard (String frenchWord, String englishWord) {
-		mCardView.addCard(new MyCard(frenchWord, englishWord));
-		mCardView.refresh();
-	}
 }
