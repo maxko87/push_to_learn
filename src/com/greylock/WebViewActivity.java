@@ -13,12 +13,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.parse.ParseObject;
 
@@ -39,7 +42,7 @@ public class WebViewActivity extends Activity
                 "&response_type=token" + 
                 "&redirect_uri=" + CALLBACK_URL;
                 
-        WebView webview = (WebView)findViewById(R.id.webview);
+        final WebView webview = (WebView)findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true);
         final WebViewActivity webViewContext = this;
         webview.setWebViewClient(new WebViewClient() {
@@ -49,7 +52,7 @@ public class WebViewActivity extends Activity
                 System.out.println("url: " + url);
                 if (start > -1) {
                     final String accessToken = url.substring(start + fragment.length(), url.length());
-                    Toast.makeText(WebViewActivity.this, "Token: " + accessToken, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WebViewActivity.this, "Token: " + accessToken, Toast.LENGTH_SHORT).show();
                     Thread trd = new Thread(new Runnable(){
                     	  @Override
                     	  public void run(){
@@ -67,13 +70,47 @@ public class WebViewActivity extends Activity
             }
         });
         webview.loadUrl(url);
-        //Intent intent = new Intent(this, MainActivity.class);
-        //startActivity(intent);
-
+        
+        /*
+        // will wait for the redirect, and close the webview
+        final WebViewActivity webViewActivity = this;
+        Thread trd = new Thread(new Runnable(){
+	      	@Override
+	      	public void run(){
+		        while (true){
+		        	String webUrl = webview.getUrl();
+		        	//System.out.println("webview url: " + webUrl);
+		        	if (webUrl != null && webUrl.equals("http://dry-plateau-8291.herokuapp.com/redirect")){	      				
+		        		closeWebView.run();
+		        	}
+		        	else{
+		        		try {
+							Thread.sleep(300);
+						} catch (InterruptedException e) {}
+		        	}
+		        }
+	      	}
+	    });
+	    trd.start();
+	    */
     }
     
+    /*
+    private Runnable closeWebView = new Runnable() {
+        public void run() {
+        	try {
+				Thread.sleep(2000);
+				Intent intent = new Intent(null, MainActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				//finish();
+			} catch (InterruptedException e) {}
+        }
+    };
+    */
+    
     // another api call to get the userId of the foursquare user
-    public void getUserJson(String accessToken, String deviceId){
+    private void getUserJson(String accessToken, String deviceId){
     	String URL = "https://api.foursquare.com/v2/users/self?oauth_token=" + accessToken;
         HttpClient httpclient = new DefaultHttpClient();  
         HttpGet request = new HttpGet(URL);  
@@ -92,13 +129,13 @@ public class WebViewActivity extends Activity
 		Pattern p = Pattern.compile("[0-9]+\"");
 		Matcher m = p.matcher(result);
 		int i=0;
-		String userId = "fuck it";
+		String userId = "none";
 		while (m.find() && i<1){			
 			userId = m.group();
 			userId = userId.substring(0, userId.length()-1);
 			i++;
 		}
-		System.out.println("FUCK YOU: " + userId);
+		System.out.println("woops: " + userId);
 		
         // store token and device ID
         ParseObject foursquareUser = new ParseObject("foursquareUser");
