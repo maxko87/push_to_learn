@@ -72,11 +72,11 @@ public class RenderActivity extends Activity {
 		        		String cardTitle = res.getString("english");
 		        		String cardContent = res.getString("translation");
 		        		String cardPlace = res.getString("place");
-		        		String cardService = res.getString("service");
+		        		//String cardService = res.getString("service");
 		        		System.out.println("CARD INFO:" + cardTitle + " + " + cardContent);
 		        		
 		        		if (i==0){
-		        			mCardView.addCard(new MyCard(cardTitle, cardContent + " \n Sent because you checked in at " + cardPlace + " with " + cardService));
+		        			mCardView.addCard(new MyCard(cardTitle, cardContent + " \n Sent because you checked in at " + cardPlace + " with " + "Foursquare"));
 		        		}
 		        		else{
 		        			mCardView.addCardToLastStack(new MyCard(cardTitle, cardContent));
