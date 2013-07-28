@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.foursquare.android.oauth;
+package com.foursquare.greylock;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;
