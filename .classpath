@@ -5,5 +5,9 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CardsUILib"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PullToRefreshListView"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CardsUIExample"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PullToRefresh SampleProject"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
