@@ -12,6 +12,8 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.foursquare.greylock.R;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 public class ActivityWebView extends Activity 
 {
@@ -38,12 +40,15 @@ public class ActivityWebView extends Activity
                 String fragment = "#access_token=";
                 int start = url.indexOf(fragment);
                 if (start > -1) {
-                    // You can use the accessToken for api calls now.
                     String accessToken = url.substring(start + fragment.length(), url.length());
-        			
                     Log.v(TAG, "OAuth complete, token: [" + accessToken + "].");
-                	
                     Toast.makeText(ActivityWebView.this, "Token: " + accessToken, Toast.LENGTH_SHORT).show();
+                    
+                    ParseObject foursquareUser = new ParseObject("foursquareUser");
+                    foursquareUser.put("foursquareAccessToken", accessToken);
+                    foursquareUser.put("user", "user_"+ParseUser.getCurrentUser().getObjectId());
+                    foursquareUser.saveInBackground();
+
                 }
             }
         });

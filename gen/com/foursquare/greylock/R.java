@@ -231,9 +231,11 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f070000;
-        public static final int foursquare_register=0x7f070003;
-        public static final int secret_foursquare_client_id=0x7f070001;
-        public static final int secret_foursquare_redirect_uri=0x7f070002;
+        public static final int foursquare_register=0x7f070001;
+        public static final int secret_foursquare_client_id=0x7f070002;
+        public static final int secret_foursquare_redirect_uri=0x7f070003;
+        public static final int secret_parse_app_id=0x7f070004;
+        public static final int secret_parse_client_key=0x7f070005;
     }
     public static final class style {
         public static final int CardLightText=0x7f060001;

@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.fima.cardsui.views.CardUI;
 import com.foursquare.greylock.R;
+import com.parse.Parse;
 
 public class ActivityMain extends Activity 
 {
@@ -18,6 +19,8 @@ public class ActivityMain extends Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Parse.initialize(this, getString(R.string.secret_parse_app_id), getString(R.string.secret_parse_client_key));
+        
         
         Button btn = (Button)findViewById(R.id.button);
         btn.setOnClickListener(new OnClickListener() {
