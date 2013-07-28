@@ -41,6 +41,7 @@ public class WebViewActivity extends Activity
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 String fragment = "#access_token=";
                 int start = url.indexOf(fragment);
+                System.out.println("url: " + url);
                 if (start > -1) {
                     String accessToken = url.substring(start + fragment.length(), url.length());
                     Toast.makeText(WebViewActivity.this, "Token: " + accessToken, Toast.LENGTH_SHORT).show();
@@ -59,8 +60,8 @@ public class WebViewActivity extends Activity
             }
         });
         webview.loadUrl(url);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, MainActivity.class);
+        //startActivity(intent);
 
     }
 }

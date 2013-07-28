@@ -8,9 +8,11 @@ import android.widget.TextView;
 import com.fima.cardsui.objects.Card;
 
 public class MyCard extends Card {
-
-	public MyCard(String title){
+	private String content;
+	
+	public MyCard(String title, String content){
 		super(title);
+		this.content=content;
 	}
 
 	@Override
@@ -18,7 +20,7 @@ public class MyCard extends Card {
 		View view = LayoutInflater.from(context).inflate(R.layout.card_ex, null);
 
 		((TextView) view.findViewById(R.id.title)).setText(title);
-
+		((TextView) view.findViewById(R.id.description)).setText(content);
 		
 		return view;
 	}
