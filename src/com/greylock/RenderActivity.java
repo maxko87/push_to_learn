@@ -58,7 +58,7 @@ public class RenderActivity extends Activity {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("cardInfo");
 		query.whereEqualTo("device_id", deviceId);
 		Date now = new Date();
-		Date before = new Date(now.getTime()-(1000*60));
+		Date before = new Date(now.getTime()-(1000*60*2));
 		query.whereGreaterThan("createdAt", before);
 		
 		mCardView = (CardUI) findViewById(R.id.cardsview2);
@@ -73,10 +73,10 @@ public class RenderActivity extends Activity {
 		        		String cardContent = res.getString("translation");
 		        		String cardPlace = res.getString("place");
 		        		String cardService = res.getString("service");
-		        		System.out.println("CARD INFO:" + cardTitle + cardContent);
+		        		System.out.println("CARD INFO:" + cardTitle + " + " + cardContent);
 		        		
 		        		if (i==0){
-		        			mCardView.addCard(new MyCard(cardTitle, cardContent));
+		        			mCardView.addCard(new MyCard(cardTitle, cardContent + " \n Sent because you checked in at " + cardPlace + " with " + cardService));
 		        		}
 		        		else{
 		        			mCardView.addCardToLastStack(new MyCard(cardTitle, cardContent));
