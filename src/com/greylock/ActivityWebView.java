@@ -12,8 +12,10 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.foursquare.greylock.R;
+import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.PushService;
 
 public class ActivityWebView extends Activity 
 {
@@ -23,6 +25,7 @@ public class ActivityWebView extends Activity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
+        Parse.initialize(this, getString(R.string.secret_parse_app_id), getString(R.string.secret_parse_client_key));
         
         final String CALLBACK_URL = getString(R.string.secret_foursquare_redirect_uri);
         final String CLIENT_ID = getString(R.string.secret_foursquare_client_id);
@@ -46,12 +49,11 @@ public class ActivityWebView extends Activity
                     
                     ParseObject foursquareUser = new ParseObject("foursquareUser");
                     foursquareUser.put("foursquareAccessToken", accessToken);
-                    foursquareUser.put("user", "user_"+ParseUser.getCurrentUser().getObjectId());
                     foursquareUser.saveInBackground();
-
                 }
             }
         });
         webview.loadUrl(url);
+
     }
 }
